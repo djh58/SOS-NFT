@@ -26,7 +26,7 @@ contract OpenNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
         return _tokenBaseURI;
     }
 
-    function safeMint(address to) public {
+    function safeMint() external {
         require(
             _tokenIdCounter.current() <= MAX_SUPPLY,
             "Max supply has been reached"
@@ -41,7 +41,7 @@ contract OpenNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
         // link: https://jbecker.dev/research/adidas-originals/
         require(tx.origin == msg.sender, "Only users can mint");
         SOS.transferFrom(msg.sender, address(this), sosCost);
-        _safeMint(to, _tokenIdCounter.current());
+        _safeMint(msg.sender, _tokenIdCounter.current());
         _tokenIdCounter.increment();
     }
 
